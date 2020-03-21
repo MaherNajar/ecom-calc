@@ -1,15 +1,5 @@
 import { fs } from './firebase';
 import { Product } from './product';
-function saveProduct(product) {
-  if(product.id) return;
-  const collectionRef = fs.collection('products');
-  product.cost = 0;
-  product.sell = 0;
-  collectionRef.add(product).then(
-    () => console.log('product saved !'),
-    err => console.log('an error occured :' + err)
-  );
-}
 
 async function getProducts() {
   const products = [];
@@ -26,6 +16,21 @@ async function getProducts() {
   return products;
 }
 
-async function updateProduct(product) {}
+function saveProduct(product) {
+  let id = this.fs.createId();
+  const docRef = this.fs.doc(`products/${id}`);
 
-export { saveProduct, getProducts, updateProduct };
+  docRef.set({ ...product, id });
+}
+
+function updateProduct(product) {
+  const docRef = this.fs.doc(`products/${product.id}`);
+  docRef.update({ ...product });
+}
+
+function deleteProduct(product) {
+  const docRef = this.fs.doc(`products/${product.id}`);
+  docRef.delete();
+}
+
+export { getProducts, saveProduct, updateProduct, deleteProduct };

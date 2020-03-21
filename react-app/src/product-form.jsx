@@ -1,31 +1,40 @@
 import React, { Component } from 'react';
-import { saveProduct } from './productService';
+import { saveProduct, updateProduct } from './productService';
+import { Product } from './product';
 
 export class ProductForm extends Component {
-
+  state = {
+    product: null
+  };
   componentDidMount() {
-    if(this.props.product) {
-      this.setState({...product})
-    }
-    else initializeState();
-   
+    let selectedProduct = this.props.selectedProduct;
+    console.log(selectedProduct);
+    this.initialiseProduct(selectedProduct);
   }
 
-  initializeState = () => {
-    this.setState({url:'', name:''});
-  };
+  initialiseProduct(product) {
+    if (product) this.setState({ product });
+    else this.setState({ product: new Product() });
+  }
+
   handleInputChange = ({ target }) => {
-    this.setState({
-      [target.id]: target.value
-    });
+    let product = Object.create(new Product(), { ...this.state.product });
+    console.log(product);
+    product[target.id] = target.value;
+    console.log(product);
+    this.setState(product);
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    saveProduct(this.state);
+    let { product } = this.state;
+    if (product.isNew) saveProduct(product);
+    else updateProduct(product);
+    this.props.onSubmit(1);
   };
+
   render() {
-    const { name, url } = this.state;
+    const { product: p } = this.state;
     return (
       <div className="container">
         <h3 className="text-center text-nowrap">Add new product</h3>
@@ -37,7 +46,7 @@ export class ProductForm extends Component {
               id="name"
               className="form-control"
               type="text"
-              value={name}
+              value={p?.name}
             />
           </div>
           <div className="form-group">
@@ -47,7 +56,7 @@ export class ProductForm extends Component {
               id="url"
               className="form-control"
               type="url"
-              value={url}
+              value={p?.url}
             />
           </div>
           <input type="submit" className="btn btn-primary" value="Save" />

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import Button from 'react-bootstrap/button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTools, faSave } from '@fortawesome/free-solid-svg-icons';
 import './Products.css';
 import { getProducts, updateProduct } from './productService';
 
 export class Products extends Component {
   state = {
-    products: []
+    products: [],
+    save: true
   };
   async componentDidMount() {
     this.setState({ products: await getProducts() });
@@ -17,42 +19,45 @@ export class Products extends Component {
     const name = e.target.id;
     const value = e.target.value;
     p[name] = value;
-    p.calculateProfitAndRate();
     products.splice(index, 1, p);
-    this.setState({ products });
-    updateProduct(p);
+    this.setState({ products, save: false });
   };
 
-  onEditProduct = (e, p) => {
-    e.stopPropagation();
-    this.props.onEditProduct(p);
-  }
+  handleSave = () => {
+    this.setState({ save: true });
+  };
 
   render() {
     return (
       <div className="container" style={{ overflowX: 'auto' }}>
         <h3 className="text-center">Ecommerce calculator</h3>
-        <Button
-          onClick={this.props.onNewProduct}
-          variant="primary"
-        >
-          New product
-        </Button>
+        <FontAwesomeIcon
+          className={
+            this.state.save ? 'float-right icon' : 'float-right icon blinking'
+          }
+          icon={faSave}
+          onClick={this.handleSave}
+        />
+        <FontAwesomeIcon className="float-right icon" icon={faTools} />
         <table className="table table-stripped table-bordered">
           <thead>
             <tr>
               <th>Product</th>
-              <th>cost</th>
-              <th>sell</th>
-              <th>profit</th>
-              <th>rate</th>
+              <th>Cost</th>
+              <th>Sell</th>
+              <th>Profit</th>
+              <th>Rate</th>
             </tr>
           </thead>
           <tbody>
             {this.state.products.map(p => (
               <tr key={p.id}>
                 <td>
-                  <a href={p.href} onClick={e => this.onEditProduct(e, p)} id="product" >
+                  <a
+                    href={p.href}
+                    onClick={() => this.props.onSelectProduct(p)}
+                    id="product"
+                  >
                     {p.name}
                   </a>
                 </td>
@@ -77,7 +82,7 @@ export class Products extends Component {
                 </td>
                 <td>
                   <span
-                    className={p.rate >= 10 ? 'goodRate' : 'badRate'}
+                    style={{ color: p.rate >= 10 ? 'green' : 'red' }}
                     id="rate"
                   >
                     {p.rate} %

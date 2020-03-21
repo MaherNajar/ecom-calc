@@ -1,7 +1,7 @@
-input {
-  border: none;
-  background: transparent;
+input[type="number"] {
   width: 60px;
+  background: transparent;
+  border: none;
 }
 
 #profit,
@@ -24,7 +24,7 @@ a:hover {
   text-decoration: underline;
 }
 
-FontAwesomeIcon:hover {
+fa-icon:hover {
   cursor: pointer;
 }
 
@@ -47,9 +47,4 @@ FontAwesomeIcon:hover {
   100% {
     color: #000;
   }
-}
-
-.icon {
-  margin: 10px;
-  cursor: pointer;
 }

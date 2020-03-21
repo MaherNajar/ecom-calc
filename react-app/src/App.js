@@ -2,34 +2,34 @@ import React, { Component } from 'react';
 import { Products } from './products';
 import { ProductForm } from './product-form';
 import { Tab, Tabs } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 export default class App extends Component {
   state = {
-    key: 'products',
-    currentProduct:null
+    key: 1,
+    selectedProduct: null
   };
   handleKey = key => {
     this.setState({ key });
   };
 
-  handleEditForm = currentProduct => {
-    this.setState({currentProduct});
-    this.handleKey('productForm')
-  }
+  handleSelectedProduct = selectedProduct => {
+    this.setState({ selectedProduct });
+    this.handleKey(2);
+  };
 
-  
   render() {
+    const { selectedProduct, key } = this.state;
     return (
-      <Tabs activeKey={this.state.key} onSelect={k => this.handleKey(k)}>
-        <Tab eventKey="products" title="Products">
-          <Products onEditProduct={p => this.handleEditForm(p)} onNewProduct={() => this.handleKey('productForm')} />
+      <Tabs activeKey={key} onSelect={this.handleKey}>
+        <Tab eventKey="1" title="Products">
+          <Products onSelectProduct={this.handleSelectedProduct} />
         </Tab>
-        <Tab eventKey="productForm" title="Product form">
-          <ProductForm product={this.state.currentProduct} />
+        <Tab eventKey="2" title="Product form">
+          <ProductForm
+            selectedProduct={selectedProduct}
+            onSubmit={this.handleKey}
+          />
         </Tab>
-        <Tab eventKey="config" title={<FontAwesomeIcon icon={faCog} />}></Tab>
       </Tabs>
     );
   }

@@ -1,0 +1,70 @@
+<div class="container" style="overflow-x: auto;">
+  <h3 class="text-center">
+    Ecommerce calculator
+  </h3>
+  <p>
+    <fa-icon
+      (click)="handleSaveChanges()"
+      size="lg"
+      class="float-right m-3"
+      [ngClass]="{ blinking: !saved }"
+      [icon]="faSave"
+    ></fa-icon>
+    <fa-icon
+      (click)="openModal()"
+      class="float-right m-3"
+      [icon]="faTools"
+    ></fa-icon>
+  </p>
+  <table class="table table-stripped table-bordered">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Cost</th>
+        <th>Sell</th>
+        <th>Profit</th>
+        <th>Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td>
+          <a id="name" (click)="handleSelectedProduct(p)" role="button">
+            {{ p.name }}
+          </a>
+          <span
+            class="badge badge-danger float-right delete"
+            (click)="deleteProduct(p)"
+            >Delete</span
+          >
+        </td>
+        <td>
+          <input
+            [value]="p.cost"
+            (change)="handleInputChange($event, p)"
+            id="cost"
+            min="0"
+            type="number"
+          />
+        </td>
+        <td>
+          <input
+            [value]="p.sell"
+            (change)="handleInputChange($event, p)"
+            id="sell"
+            min="0"
+            type="number"
+          />
+        </td>
+        <td>
+          <span id="profit">{{ p.profit }}</span>
+        </td>
+        <td>
+          <span id="rate" [ngStyle]="{ color: p.rate >= 10 ? 'green' : 'red' }">
+            {{ p.rate }} %
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

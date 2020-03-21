@@ -1,0 +1,81 @@
+<div class="container">
+  <h3 class=" text-nowrap text-center">
+    {{ product.isNew ? "New product" : "Edit product" }}
+  </h3>
+  <div class="row">
+    <div class="col-7"></div>
+    <div class="col">
+      <button
+        (click)="navService.select(1)"
+        type="button"
+        class="btn btn-info float-right ml-2 mb-2"
+      >
+        Back
+      </button>
+      <button
+        type="button"
+        *ngIf="!product.isNew"
+        (click)="initialiseProduct()"
+        class="btn btn-primary float-right"
+      >
+        New product
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <form (ngSubmit)="handleSubmit()">
+        <div class="form-group">
+          <label htmlFor="name">Product name</label>
+          <input
+            [(ngModel)]="product.name"
+            id="name"
+            name="name"
+            class="form-control"
+            required
+            type="text"
+          />
+        </div>
+        <div class="form-group">
+          <label htmlFor="url">URL</label>
+          <input
+            [(ngModel)]="product.url"
+            name="url"
+            id="url"
+            class="form-control"
+            type="url"
+          />
+        </div>
+        <ng-container *ngIf="!product.isNew">
+          <div class="form-group">
+            <label htmlFor="cost">Cost</label>
+            <input
+              [(ngModel)]="product.cost"
+              name="cost"
+              id="cost"
+              min="0"
+              class="form-control"
+              type="number"
+            />
+          </div>
+          <div class="form-group">
+            <label htmlFor="sell">Sell</label>
+            <input
+              [(ngModel)]="product.sell"
+              name="sell"
+              id="sell"
+              min="0"
+              class="form-control"
+              type="number"
+            />
+          </div>
+        </ng-container>
+        <div class="text-center">
+          <input type="submit" class="btn btn-primary " value="Save" />
+        </div>
+      </form>
+    </div>
+    <div class="col"></div>
+  </div>
+</div>
