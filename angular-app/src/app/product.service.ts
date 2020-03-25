@@ -27,6 +27,11 @@ export class ProductService {
       );
   }
 
+  getProduct(id: string) {
+    const docRef = this.fs.doc(`products/${id}`);
+    return docRef.valueChanges().pipe(map((x: any) => new Product({ ...x })));
+  }
+
   saveProduct(product: Product) {
     let id = this.fs.createId();
     const docRef = this.fs.doc(`products/${id}`);

@@ -21,7 +21,6 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private navService: NavService,
     private modalService: NgbModal
   ) {}
 
@@ -29,11 +28,6 @@ export class ProductsComponent implements OnInit {
     this.productService
       .getProducts()
       .subscribe(products => (this.products = products));
-  }
-
-  handleSelectedProduct(selectedProduct: Product) {
-    this.productService.selectedProduct = selectedProduct;
-    this.navService.select(2);
   }
 
   handleInputChange(e, p: Product) {

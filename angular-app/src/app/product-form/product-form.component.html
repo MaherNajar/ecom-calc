@@ -1,12 +1,12 @@
 <div class="container">
-  <h3 class=" text-nowrap text-center">
+  <h1 class=" text-nowrap text-center">
     {{ product.isNew ? "New product" : "Edit product" }}
-  </h3>
+  </h1>
   <div class="row">
     <div class="col-7"></div>
     <div class="col">
       <button
-        (click)="navService.select(1)"
+        routerLink="/"
         type="button"
         class="btn btn-info float-right ml-2 mb-2"
       >

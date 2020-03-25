@@ -1,7 +1,8 @@
-import { NavService } from "./../nav.service";
 import { Component, OnInit } from "@angular/core";
 import { ProductService } from "../product.service";
 import { Product } from "../product";
+import { ActivatedRoute } from "@angular/router";
+import { switchMap } from "rxjs/operators";
 
 @Component({
   selector: "app-product-form",
@@ -12,22 +13,22 @@ export class ProductFormComponent implements OnInit {
   product: Product;
   constructor(
     private productService: ProductService,
-    public navService: NavService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    let selectedProduct = this.productService.selectedProduct;
-    this.initialiseProduct(selectedProduct);
+    this.route.params
+      .pipe(switchMap(params => this.productService.getProduct(params.id)))
+      .subscribe(p => this.initialiseProduct(p));
   }
 
   initialiseProduct(product?: Product) {
     if (product) this.product = product;
-    else this.product = this.productService.selectedProduct = new Product();
+    else this.product = new Product();
   }
 
   handleSubmit() {
     if (this.product.isNew) this.productService.saveProduct(this.product);
     else this.productService.updateProduct(this.product);
-    this.navService.select(1);
   }
 }
