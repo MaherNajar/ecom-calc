@@ -2,50 +2,59 @@ import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
 import { Product } from "./product";
-import { Observable } from "rxjs";
+import { of } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class ProductService {
-  constructor(private fs: AngularFirestore) {}
-  selectedProduct: Product;
+  constructor(private db: AngularFirestore) {}
 
-  getProducts(): Observable<Product[]> {
-    return this.fs
-      .collection("products")
-      .get()
-      .pipe(
-        map(querySnapshot => {
-          let products = [];
-          querySnapshot.forEach(doc => {
-            let product = new Product({ id: doc.id, ...doc.data() });
-            products.push(product);
-          });
-          return products;
-        })
-      );
+  products = null;
+  subscription;
+
+  subscribeToProducts() {
+    if (!this.products) {
+      this.db
+        .collection("products")
+        .valueChanges({ idField: "id" })
+        .pipe(map((p: any) => new Product({ ...p })))
+        .subscribe(products => (this.products = products));
+    }
   }
 
   getProduct(id: string) {
-    const docRef = this.fs.doc(`products/${id}`);
-    return docRef.valueChanges().pipe(map((x: any) => new Product({ ...x })));
+    if (this.products) {
+      const cached = this.products.find(p => p.id === id);
+      return of(cached);
+    } else {
+      return this.db
+        .collection("products")
+        .doc(id)
+        .valueChanges()
+        .pipe(map((x: any) => new Product({ ...x })));
+    }
   }
 
   saveProduct(product: Product) {
-    let id = this.fs.createId();
-    const docRef = this.fs.doc(`products/${id}`);
-
-    docRef.set({ ...product, id });
+    let id = this.db.createId();
+    this.db
+      .collection("products")
+      .doc(id)
+      .set({ ...product, id });
   }
 
   updateProduct(product: Product) {
-    const docRef = this.fs.doc(`products/${product.id}`);
-    docRef.update({ ...product });
+    this.db
+      .collection("products")
+      .doc(product.id)
+      .update({ ...product });
   }
 
   deleteProduct(product: Product) {
-    const docRef = this.fs.doc(`products/${product.id}`);
-    docRef.delete();
+    this.db
+      .collection("products")
+      .doc(product.id)
+      .delete();
   }
 }

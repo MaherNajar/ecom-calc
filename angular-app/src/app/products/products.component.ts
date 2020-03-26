@@ -1,4 +1,3 @@
-import { NavService } from "./../nav.service";
 import { Component, OnInit } from "@angular/core";
 import { faSave, faTools } from "@fortawesome/free-solid-svg-icons";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -20,14 +19,15 @@ export class ProductsComponent implements OnInit {
   saved = true;
 
   constructor(
-    private productService: ProductService,
+    public productService: ProductService,
     private modalService: NgbModal
   ) {}
 
-  ngOnInit(): void {
-    this.productService
-      .getProducts()
-      .subscribe(products => (this.products = products));
+  async ngOnInit() {
+    await this.productService.subscribeToProducts();
+    setInterval(() => {
+      this.products = this.productService.products;
+    }, 3000);
   }
 
   handleInputChange(e, p: Product) {
