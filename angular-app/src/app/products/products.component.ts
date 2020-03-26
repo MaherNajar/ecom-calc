@@ -23,11 +23,9 @@ export class ProductsComponent implements OnInit {
     private modalService: NgbModal
   ) {}
 
-  async ngOnInit() {
-    await this.productService.subscribeToProducts();
-    setInterval(() => {
+  ngOnInit() {
+    this.productService.subscribeToProducts();
       this.products = this.productService.products;
-    }, 3000);
   }
 
   handleInputChange(e, p: Product) {
