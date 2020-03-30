@@ -1,22 +1,10 @@
-<div class="container" style="overflow-x: auto;">
+<main>
   <h1 class="text-center">
     Ecommerce calculator
   </h1>
-  <p>
-    <fa-icon
-      (click)="handleSaveChanges()"
-      size="lg"
-      class="float-right m-3"
-      [ngClass]="{ blinking: !saved }"
-      [icon]="faSave"
-    ></fa-icon>
-    <fa-icon
-      (click)="openModal()"
-      class="float-right m-3"
-      [icon]="faTools"
-    ></fa-icon>
-  </p>
-  <table class="table table-stripped table-bordered">
+
+  <mat-card>
+    <!-- <table class="table table-stripped table-bordered">
     <thead>
       <tr>
         <th>Product</th>
@@ -27,14 +15,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let p of products">
+      <tr *ngFor="let p of productService.products.data">
         <td>
           <a id="name" routerLink="form/{{ p.id }}">
             {{ p.name }}
           </a>
           <span
             class="badge badge-danger float-right delete"
-            (click)="deleteProduct(p)"
+            (click)="productService.handleDeleteProduct(p)"
             >Delete</span
           >
         </td>
@@ -66,5 +54,127 @@
         </td>
       </tr>
     </tbody>
-  </table>
-</div>
+  </table> -->
+    <div class="mat-elevation-z8">
+      <fa-icon
+        (click)="productService.saveChanges()"
+        title="Save changes"
+        id="saveBtn"
+        [ngClass]="{ blinking: !productService.saved }"
+        [icon]="faSave"
+      ></fa-icon>
+      <fa-icon
+        (click)="openModal()"
+        title="Tools"
+        id="toolsBtn"
+        [icon]="faTools"
+      ></fa-icon>
+      <fa-icon
+        (click)="productService.loadProductsFromDB(paginator)"
+        title="Sync with Database"
+        id="syncBtn"
+        [icon]="faSyncAlt"
+      ></fa-icon>
+
+      <table
+        mat-table
+        [dataSource]="productService.products"
+        style="width: 100%;"
+      >
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <!-- Product Column -->
+        <ng-container matColumnDef="Product">
+          <th mat-header-cell *matHeaderCellDef>
+            Product
+            <fa-icon
+              routerLink="form/new"
+              title="Add new"
+              id="addBtn"
+              [icon]="faPlusCircle"
+            >
+            </fa-icon>
+          </th>
+          <td mat-cell *matCellDef="let product">
+            <a class="name" routerLink="form/{{ product.id }}">
+              {{ product.name }}
+            </a>
+          </td>
+        </ng-container>
+
+        <!-- Cost Column -->
+        <ng-container matColumnDef="Cost">
+          <th mat-header-cell *matHeaderCellDef>Cost</th>
+          <td mat-cell *matCellDef="let product">
+            <input
+              (change)="handleInputChange($event, product)"
+              min="0"
+              type="number"
+              [value]="product.cost"
+              class="cost"
+            />
+          </td>
+        </ng-container>
+
+        <!-- Sell Column -->
+        <ng-container matColumnDef="Sell">
+          <th mat-header-cell *matHeaderCellDef>Sell</th>
+          <td mat-cell *matCellDef="let product">
+            <input
+              (change)="handleInputChange($event, product)"
+              min="0"
+              type="number"
+              [value]="product.sell"
+              class="sell"
+            />
+          </td>
+        </ng-container>
+
+        <!-- Profit Column -->
+        <ng-container matColumnDef="Profit">
+          <th mat-header-cell *matHeaderCellDef>Profit</th>
+          <td mat-cell *matCellDef="let product">
+            <input
+              readonly
+              type="text"
+              value="{{ product.profit }}"
+              class="profit"
+            />
+          </td>
+        </ng-container>
+
+        <!-- Rate Column -->
+        <ng-container matColumnDef="Rate">
+          <th mat-header-cell *matHeaderCellDef>Rate</th>
+          <td mat-cell *matCellDef="let product">
+            <input
+              readonly
+              [ngStyle]="{ color: product.rate >= 10 ? 'green' : 'red' }"
+              type="text"
+              value="{{ product.rate }} %"
+              class="text-nowrap rate"
+            />
+          </td>
+        </ng-container>
+
+        <!-- Delete Column -->
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let product">
+            <fa-icon
+              [icon]="faTrashAlt"
+              title="Delete"
+              (click)="productService.deleteProduct(product)"
+            ></fa-icon>
+          </td>
+        </ng-container>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[2, 5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </mat-card>
+</main>

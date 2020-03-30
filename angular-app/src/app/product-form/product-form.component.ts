@@ -1,34 +1,52 @@
 import { Component, OnInit } from "@angular/core";
 import { ProductService } from "../product.service";
 import { Product } from "../product";
-import { ActivatedRoute } from "@angular/router";
-import { switchMap } from "rxjs/operators";
+import { ActivatedRoute, Router } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
-  selector: "app-product-form",
   templateUrl: "./product-form.component.html",
   styleUrls: ["./product-form.component.scss"]
 })
 export class ProductFormComponent implements OnInit {
-  product: Product;
+  productForm: FormGroup;
+
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {
-    this.route.params
-      .pipe(switchMap(params => this.productService.getProduct(params.id)))
-      .subscribe(p => this.initialiseProduct(p));
+  get isNew() {
+    return this.productForm.get("id").value === "";
   }
 
-  initialiseProduct(product?: Product) {
-    if (product) this.product = product;
-    else this.product = new Product();
+  initProductForm(product: Product) {
+    this.productForm = this.formBuilder.group({
+      id: [product.id],
+      name: [product.name, Validators.required],
+      url: [product.url, [Validators.required]],
+      cost: [product.cost, Validators.min(0)],
+      sell: [product.sell, Validators.min(0)]
+    });
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(async param => {
+      if (param.id === "new") this.initProductForm(new Product());
+      else {
+        this.productService.getProduct(param.id).subscribe(product => {
+          this.initProductForm(product);
+        });
+      }
+    });
   }
 
   handleSubmit() {
-    if (this.product.isNew) this.productService.saveProduct(this.product);
-    else this.productService.updateProduct(this.product);
+    let product = new Product(this.productForm.value);
+    if (product.isNew) this.productService.saveProduct(product);
+    else this.productService.updateProduct(product);
+    this.router.navigate([""]);
   }
 }

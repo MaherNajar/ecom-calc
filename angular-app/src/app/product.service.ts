@@ -3,6 +3,8 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
 import { Product } from "./product";
 import { of } from "rxjs";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator } from "@angular/material/paginator";
 
 @Injectable({
   providedIn: "root"
@@ -10,29 +12,49 @@ import { of } from "rxjs";
 export class ProductService {
   constructor(private db: AngularFirestore) {}
 
-  products = null;
-  subscription;
+  products: MatTableDataSource<Product> = null;
+  saved = true;
 
-  subscribeToProducts() {
+  subscribeToProducts(paginator: MatPaginator) {
     if (!this.products) {
-      this.db
-        .collection("products")
-        .valueChanges({ idField: "id" })
-        .pipe(map((p: any) => new Product({ ...p })))
-        .subscribe(products => (this.products = products));
-    }
+      console.log("pas de cache");
+      this.loadProductsFromDB(paginator);
+    } else this.products.paginator = paginator;
+  }
+
+  loadProductsFromDB(paginator: MatPaginator) {
+    this.db
+      .collection("products")
+      .valueChanges()
+      .pipe(map(products => products.map(p => new Product(p))))
+      .subscribe(products => {
+        this.products = new MatTableDataSource(products);
+        this.products.paginator = paginator;
+        this.saved = true;
+      });
+  }
+
+  applyChanges(products: Product[]) {
+    this.products.data = products;
+    this.saved = false;
+  }
+
+  saveChanges() {
+    this.products.data.forEach(product => this.updateProduct(product));
+    this.saved = true;
   }
 
   getProduct(id: string) {
     if (this.products) {
-      const cached = this.products.find(p => p.id === id);
+      const cached = this.products.data.find(product => product.id === id);
+      console.log("product from cache");
       return of(cached);
     } else {
       return this.db
         .collection("products")
         .doc(id)
         .valueChanges()
-        .pipe(map((x: any) => new Product({ ...x })));
+        .pipe(map(x => new Product(x)));
     }
   }
 
@@ -56,5 +78,6 @@ export class ProductService {
       .collection("products")
       .doc(product.id)
       .delete();
+    this.products.data = this.products.data.filter(p => p.id !== product.id);
   }
 }

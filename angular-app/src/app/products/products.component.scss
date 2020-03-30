@@ -1,36 +1,28 @@
-input[type="number"] {
-  width: 60px;
-  background: transparent;
-  border: none;
+mat-card {
+  min-width: 150px;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-#profit,
-#rate {
-  font-weight: bold;
-}
-
-.delete {
-  cursor: pointer;
-}
-
-a {
-  color: #007bff;
-  text-decoration: underline;
-}
-
-a:hover {
-  cursor: pointer;
-  color: #0056b3;
-  text-decoration: underline;
+fa-icon {
+  margin: 1rem;
 }
 
 fa-icon:hover {
   cursor: pointer;
 }
 
+#syncBtn,
+#saveBtn,
+#toolsBtn {
+  float: right;
+}
+
 .blinking {
   animation: blinkingSave 1.2s infinite;
 }
+
 @keyframes blinkingSave {
   0% {
     color: #000;
@@ -47,4 +39,25 @@ fa-icon:hover {
   100% {
     color: #000;
   }
+}
+
+input {
+  width: 60px;
+  background: transparent;
+  border: none;
+}
+
+.cost,
+.sell {
+  color: white;
+  font-weight: bold;
+}
+
+.profit {
+  color: goldenrod;
+  font-weight: bold;
+}
+
+.rate {
+  font-weight: bold;
 }

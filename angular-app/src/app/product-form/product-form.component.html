@@ -1,81 +1,66 @@
-<div class="container">
-  <h1 class=" text-nowrap text-center">
-    {{ product.isNew ? "New product" : "Edit product" }}
-  </h1>
-  <div class="row">
-    <div class="col-7"></div>
-    <div class="col">
+<main>
+  <div *ngIf="productForm">
+    <h1 class=" text-nowrap text-center">
+      {{ isNew ? "New product" : "Edit product" }}
+    </h1>
+    <mat-card>
       <button
         routerLink="/"
-        type="button"
-        class="btn btn-info float-right ml-2 mb-2"
+        class="float-right ml-2 mb-2"
+        color="primary"
+        mat-stroked-button
       >
         Back
       </button>
+
       <button
-        type="button"
-        *ngIf="!product.isNew"
-        (click)="initialiseProduct()"
-        class="btn btn-primary float-right"
+        mat-stroked-button
+        color="warn"
+        *ngIf="!isNew"
+        routerLink="/form/new"
+        class="float-right"
       >
         New product
       </button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-2"></div>
-    <div class="col-8">
-      <form (ngSubmit)="handleSubmit()">
-        <div class="form-group">
-          <label htmlFor="name">Product name</label>
-          <input
-            [(ngModel)]="product.name"
-            id="name"
-            name="name"
-            class="form-control"
-            required
-            type="text"
-          />
-        </div>
-        <div class="form-group">
-          <label htmlFor="url">URL</label>
-          <input
-            [(ngModel)]="product.url"
-            name="url"
-            id="url"
-            class="form-control"
-            type="url"
-          />
-        </div>
-        <ng-container *ngIf="!product.isNew">
-          <div class="form-group">
-            <label htmlFor="cost">Cost</label>
-            <input
-              [(ngModel)]="product.cost"
-              name="cost"
-              id="cost"
-              min="0"
-              class="form-control"
-              type="number"
-            />
-          </div>
-          <div class="form-group">
-            <label htmlFor="sell">Sell</label>
-            <input
-              [(ngModel)]="product.sell"
-              name="sell"
-              id="sell"
-              min="0"
-              class="form-control"
-              type="number"
-            />
-          </div>
+
+      <form [formGroup]="productForm" (ngSubmit)="handleSubmit()">
+        <!-- Name form-field -->
+        <mat-form-field>
+          <mat-label>Product name</mat-label>
+          <input matInput formControlName="name" type="text" />
+        </mat-form-field>
+
+        <!-- Url form-field -->
+        <mat-form-field>
+          <mat-label>Url</mat-label>
+          <input matInput formControlName="url" type="url" />
+        </mat-form-field>
+
+        <ng-container *ngIf="!isNew">
+          <!-- Cost form-field -->
+          <mat-form-field>
+            <mat-label>Cost</mat-label>
+            <input matInput formControlName="cost" type="number" />
+          </mat-form-field>
+
+          <!-- Sell form-field -->
+          <mat-form-field>
+            <mat-label>Sell</mat-label>
+            <input matInput formControlName="sell" type="number" />
+          </mat-form-field>
         </ng-container>
+
         <div class="text-center">
-          <input type="submit" class="btn btn-primary " value="Save" />
+          <!-- Form Submit button-->
+          <button
+            mat-stroked-button
+            [disabled]="productForm.invalid"
+            type="submit"
+          >
+            Save
+          </button>
         </div>
       </form>
-    </div>
-    <div class="col"></div>
+    </mat-card>
   </div>
-</div>
+</main>
