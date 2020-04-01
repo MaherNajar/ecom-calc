@@ -2,9 +2,9 @@
   <h1 class="text-center">
     Ecommerce calculator
   </h1>
-
   <mat-card>
-    <!-- <table class="table table-stripped table-bordered">
+    <div class="mat-elevation-z8">
+      <!-- <table class="table table-stripped table-bordered">
     <thead>
       <tr>
         <th>Product</th>
@@ -55,7 +55,6 @@
       </tr>
     </tbody>
   </table> -->
-    <div class="mat-elevation-z8">
       <fa-icon
         (click)="productService.saveChanges()"
         title="Save changes"
@@ -64,9 +63,9 @@
         [icon]="faSave"
       ></fa-icon>
       <fa-icon
-        (click)="openModal()"
-        title="Tools"
-        id="toolsBtn"
+        routerLink="settings"
+        title="Settings"
+        id="settingsBtn"
         [icon]="faTools"
       ></fa-icon>
       <fa-icon
@@ -89,17 +88,18 @@
           <th mat-header-cell *matHeaderCellDef>
             Product
             <fa-icon
-              routerLink="form/new"
+              (click)="openProductFormDialog('new')"
               title="Add new"
               id="addBtn"
               [icon]="faPlusCircle"
+              size="lg"
             >
             </fa-icon>
           </th>
           <td mat-cell *matCellDef="let product">
-            <a class="name" routerLink="form/{{ product.id }}">
+            <button mat-button (click)="openProductFormDialog(product.id)">
               {{ product.name }}
-            </a>
+            </button>
           </td>
         </ng-container>
 
@@ -109,9 +109,10 @@
           <td mat-cell *matCellDef="let product">
             <input
               (change)="handleInputChange($event, product)"
+              [value]="product.cost"
+              name="cost"
               min="0"
               type="number"
-              [value]="product.cost"
               class="cost"
             />
           </td>
@@ -123,9 +124,10 @@
           <td mat-cell *matCellDef="let product">
             <input
               (change)="handleInputChange($event, product)"
+              [value]="product.sell"
+              name="sell"
               min="0"
               type="number"
-              [value]="product.sell"
               class="sell"
             />
           </td>

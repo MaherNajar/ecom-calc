@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { ProductService } from "../product.service";
-import { Product } from "../product";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit, Inject } from "@angular/core";
+import { ProductService } from "../services/product.service";
+import { Product } from "../models/product";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   templateUrl: "./product-form.component.html",
@@ -12,9 +12,9 @@ export class ProductFormComponent implements OnInit {
   productForm: FormGroup;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    public dialogRef: MatDialogRef<ProductFormComponent>,
     private productService: ProductService,
-    private route: ActivatedRoute,
-    private router: Router,
     private formBuilder: FormBuilder
   ) {}
 
@@ -33,20 +33,22 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(async param => {
-      if (param.id === "new") this.initProductForm(new Product());
-      else {
-        this.productService.getProduct(param.id).subscribe(product => {
-          this.initProductForm(product);
-        });
-      }
-    });
+    if (this.data.id === "new") this.createNewProduct();
+    else {
+      this.productService.getProduct(this.data.id).subscribe(product => {
+        this.initProductForm(product);
+      });
+    }
+  }
+
+  createNewProduct() {
+    this.initProductForm(new Product());
   }
 
   handleSubmit() {
+    this.dialogRef.close();
     let product = new Product(this.productForm.value);
     if (product.isNew) this.productService.saveProduct(product);
     else this.productService.updateProduct(product);
-    this.router.navigate([""]);
   }
 }

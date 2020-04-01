@@ -6,13 +6,13 @@ import {
   faTrashAlt,
   faPlusCircle
 } from "@fortawesome/free-solid-svg-icons";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import { ProductService } from "../product.service";
+import { ProductService } from "../services/product.service";
+import { Product } from "../models/product";
+import { MatDialog } from "@angular/material/dialog";
 
-import { Product } from "../product";
-import { ParametersComponent } from "../parameters/parameters.component";
 import { MatPaginator } from "@angular/material/paginator";
+import { ProductFormComponent } from "../product-form/product-form.component";
 
 @Component({
   selector: "app-products",
@@ -30,7 +30,7 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     public productService: ProductService,
-    private modalService: NgbModal
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -40,16 +40,16 @@ export class ProductsComponent implements OnInit {
   handleInputChange(e, p: Product) {
     let products = [...this.productService.products.data];
     let index = products.indexOf(p);
-    const name = e.target.id;
-    const value = e.target.value;
+    const { name, value } = e.target;
     p[name] = value;
     products.splice(index, 1, p);
     this.productService.applyChanges(products);
   }
 
-  openModal() {
-    this.modalService.open(ParametersComponent, {
-      size: "sm"
+  openProductFormDialog(id: string) {
+    this.dialog.open(ProductFormComponent, {
+      width: "400px",
+      data: { id }
     });
   }
 }

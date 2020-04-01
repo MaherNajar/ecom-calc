@@ -3,64 +3,54 @@
     <h1 class=" text-nowrap text-center">
       {{ isNew ? "New product" : "Edit product" }}
     </h1>
-    <mat-card>
-      <button
-        routerLink="/"
-        class="float-right ml-2 mb-2"
-        color="primary"
-        mat-stroked-button
-      >
-        Back
-      </button>
 
-      <button
-        mat-stroked-button
-        color="warn"
-        *ngIf="!isNew"
-        routerLink="/form/new"
-        class="float-right"
-      >
-        New product
-      </button>
+    <button
+      mat-stroked-button
+      color="accent"
+      *ngIf="!isNew"
+      (click)="createNewProduct()"
+      class="float-right"
+    >
+      New product
+    </button>
 
-      <form [formGroup]="productForm" (ngSubmit)="handleSubmit()">
-        <!-- Name form-field -->
+    <form [formGroup]="productForm" (ngSubmit)="handleSubmit()">
+      <!-- Name form-field -->
+      <mat-form-field>
+        <mat-label>Product name</mat-label>
+        <input matInput formControlName="name" type="text" />
+      </mat-form-field>
+
+      <!-- Url form-field -->
+      <mat-form-field>
+        <mat-label>Url</mat-label>
+        <input matInput formControlName="url" type="url" />
+      </mat-form-field>
+
+      <ng-container *ngIf="!isNew">
+        <!-- Cost form-field -->
         <mat-form-field>
-          <mat-label>Product name</mat-label>
-          <input matInput formControlName="name" type="text" />
+          <mat-label>Cost</mat-label>
+          <input matInput formControlName="cost" type="number" />
         </mat-form-field>
 
-        <!-- Url form-field -->
+        <!-- Sell form-field -->
         <mat-form-field>
-          <mat-label>Url</mat-label>
-          <input matInput formControlName="url" type="url" />
+          <mat-label>Sell</mat-label>
+          <input matInput formControlName="sell" type="number" />
         </mat-form-field>
+      </ng-container>
 
-        <ng-container *ngIf="!isNew">
-          <!-- Cost form-field -->
-          <mat-form-field>
-            <mat-label>Cost</mat-label>
-            <input matInput formControlName="cost" type="number" />
-          </mat-form-field>
-
-          <!-- Sell form-field -->
-          <mat-form-field>
-            <mat-label>Sell</mat-label>
-            <input matInput formControlName="sell" type="number" />
-          </mat-form-field>
-        </ng-container>
-
-        <div class="text-center">
-          <!-- Form Submit button-->
-          <button
-            mat-stroked-button
-            [disabled]="productForm.invalid"
-            type="submit"
-          >
-            Save
-          </button>
-        </div>
-      </form>
-    </mat-card>
+      <div class="text-center">
+        <!-- Form Submit button-->
+        <button
+          mat-stroked-button
+          [disabled]="productForm.invalid"
+          type="submit"
+        >
+          Save
+        </button>
+      </div>
+    </form>
   </div>
 </main>

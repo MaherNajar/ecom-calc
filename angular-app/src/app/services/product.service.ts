@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
-import { Product } from "./product";
+import { Product } from "../models/product";
 import { of } from "rxjs";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
@@ -17,7 +17,6 @@ export class ProductService {
 
   subscribeToProducts(paginator: MatPaginator) {
     if (!this.products) {
-      console.log("pas de cache");
       this.loadProductsFromDB(paginator);
     } else this.products.paginator = paginator;
   }
@@ -47,7 +46,6 @@ export class ProductService {
   getProduct(id: string) {
     if (this.products) {
       const cached = this.products.data.find(product => product.id === id);
-      console.log("product from cache");
       return of(cached);
     } else {
       return this.db

@@ -1,0 +1,38 @@
+<h1 class="text-center">Settings</h1>
+
+<mat-card>
+  <!-- Reset button -->
+  <button
+    mat-button
+    color="accent"
+    (click)="resetDefault()"
+    class="float-right"
+  >
+    Reset
+  </button>
+  <button
+    routerLink=""
+    class="float-right ml-2 mb-2"
+    color="primary"
+    mat-stroked-button
+  >
+    Back
+  </button>
+
+  <!-- Ebay form-field -->
+  <mat-form-field>
+    <mat-label>Ebay fees %</mat-label>
+    <input matInput type="text" [(ngModel)]="fees.ebay" name="ebay" />
+  </mat-form-field>
+
+  <!-- Paypal form-field -->
+  <mat-form-field>
+    <mat-label>Paypal fees %</mat-label>
+    <input matInput type="text" [(ngModel)]="fees.paypal" name="paypal" />
+  </mat-form-field>
+
+  <!-- Save button -->
+  <button (click)="handleSubmit()" class="float-right" mat-button type="submit">
+    Save
+  </button>
+</mat-card>
