@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTools, faSave } from '@fortawesome/free-solid-svg-icons';
-import './Products.css';
-import { getProducts, updateProduct } from './productService';
+import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTools, faSave } from "@fortawesome/free-solid-svg-icons";
+import "./Products.css";
+import { getProducts } from "./productService";
 
 export class Products extends Component {
   state = {
@@ -29,16 +29,20 @@ export class Products extends Component {
 
   render() {
     return (
-      <div className="container" style={{ overflowX: 'auto' }}>
+      <div className="container" style={{ overflowX: "auto" }}>
         <h3 className="text-center">Ecommerce calculator</h3>
         <FontAwesomeIcon
           className={
-            this.state.save ? 'float-right icon' : 'float-right icon blinking'
+            this.state.save ? "float-right icon" : "float-right icon blinking"
           }
           icon={faSave}
           onClick={this.handleSave}
         />
-        <FontAwesomeIcon className="float-right icon" icon={faTools} />
+        <FontAwesomeIcon
+          id="toolsIcon"
+          className="float-right icon"
+          icon={faTools}
+        />
         <table className="table table-stripped table-bordered">
           <thead>
             <tr>
@@ -82,7 +86,7 @@ export class Products extends Component {
                 </td>
                 <td>
                   <span
-                    style={{ color: p.rate >= 10 ? 'green' : 'red' }}
+                    style={{ color: p.rate >= 10 ? "green" : "red" }}
                     id="rate"
                   >
                     {p.rate} %

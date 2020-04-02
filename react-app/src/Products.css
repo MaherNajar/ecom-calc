@@ -24,7 +24,7 @@ a:hover {
   text-decoration: underline;
 }
 
-FontAwesomeIcon:hover {
+#toolsIcon:hover {
   cursor: pointer;
 }
 

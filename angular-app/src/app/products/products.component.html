@@ -4,57 +4,6 @@
   </h1>
   <mat-card>
     <div class="mat-elevation-z8">
-      <!-- <table class="table table-stripped table-bordered">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Cost</th>
-        <th>Sell</th>
-        <th>Profit</th>
-        <th>Rate</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let p of productService.products.data">
-        <td>
-          <a id="name" routerLink="form/{{ p.id }}">
-            {{ p.name }}
-          </a>
-          <span
-            class="badge badge-danger float-right delete"
-            (click)="productService.handleDeleteProduct(p)"
-            >Delete</span
-          >
-        </td>
-        <td>
-          <input
-            [value]="p.cost"
-            (change)="handleInputChange($event, p)"
-            id="cost"
-            min="0"
-            type="number"
-          />
-        </td>
-        <td>
-          <input
-            [value]="p.sell"
-            (change)="handleInputChange($event, p)"
-            id="sell"
-            min="0"
-            type="number"
-          />
-        </td>
-        <td>
-          <span id="profit">{{ p.profit }}</span>
-        </td>
-        <td>
-          <span id="rate" [ngStyle]="{ color: p.rate >= 10 ? 'green' : 'red' }">
-            {{ p.rate }} %
-          </span>
-        </td>
-      </tr>
-    </tbody>
-  </table> -->
       <fa-icon
         (click)="productService.saveChanges()"
         title="Save changes"
@@ -83,6 +32,7 @@
         />
       </mat-form-field>
       <table
+        aria-describedby="Ecommerce calculator"
         mat-table
         [dataSource]="productService.products"
         style="width: 100%;"
@@ -90,7 +40,7 @@
       >
         <!-- Product Column -->
         <ng-container matColumnDef="Product">
-          <th mat-header-cell *matHeaderCellDef>
+          <th id="product-header" mat-header-cell *matHeaderCellDef>
             Product
             <fa-icon
               (click)="openProductFormDialog('new')"
@@ -110,7 +60,14 @@
 
         <!-- Cost Column -->
         <ng-container matColumnDef="Cost">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cost</th>
+          <th
+            id="cost-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Cost
+          </th>
           <td mat-cell *matCellDef="let product">
             <input
               (change)="handleInputChange($event, product)"
@@ -125,7 +82,14 @@
 
         <!-- Sell Column -->
         <ng-container matColumnDef="Sell">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Sell</th>
+          <th
+            id="sell-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Sell
+          </th>
           <td mat-cell *matCellDef="let product">
             <input
               (change)="handleInputChange($event, product)"
@@ -140,7 +104,14 @@
 
         <!-- Profit Column -->
         <ng-container matColumnDef="Profit">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Profit</th>
+          <th
+            id="profit-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Profit
+          </th>
           <td mat-cell *matCellDef="let product">
             <input
               readonly
@@ -153,7 +124,14 @@
 
         <!-- Rate Column -->
         <ng-container matColumnDef="Rate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Rate</th>
+          <th
+            id="rate-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Rate
+          </th>
           <td mat-cell *matCellDef="let product">
             <input
               readonly
@@ -167,7 +145,7 @@
 
         <!-- Delete Column -->
         <ng-container matColumnDef="Delete">
-          <th mat-header-cell *matHeaderCellDef></th>
+          <th id="delete-header" mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let product">
             <fa-icon
               [icon]="faTrashAlt"
