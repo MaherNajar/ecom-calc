@@ -1,13 +1,13 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { HomePageComponent } from "./home-page/home-page.component";
+import { AuthGuard } from "./user/auth.guard";
 
 const routes: Routes = [
-  { path: "", component: HomePageComponent },
   {
     path: "products",
     loadChildren: () =>
-      import("./products/products.module").then(m => m.ProductsModule)
+      import("./products/products.module").then(m => m.ProductsModule),
+    canActivate: [AuthGuard]
   },
   {
     path: "login",
@@ -28,7 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { initialNavigation: "enabled" })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

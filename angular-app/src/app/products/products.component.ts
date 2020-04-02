@@ -12,7 +12,8 @@ import { Product } from "../models/product";
 import { MatDialog } from "@angular/material/dialog";
 
 import { MatPaginator } from "@angular/material/paginator";
-import { ProductFormComponent } from "../product-form/product-form.component";
+import { ProductFormComponent } from "./product-form/product-form.component";
+import { MatSort } from "@angular/material/sort";
 
 @Component({
   selector: "app-products",
@@ -26,7 +27,9 @@ export class ProductsComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   faPlusCircle = faPlusCircle;
   displayedColumns = ["Product", "Cost", "Sell", "Profit", "Rate", "Delete"];
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     public productService: ProductService,
@@ -34,7 +37,12 @@ export class ProductsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.productService.subscribeToProducts(this.paginator);
+    this.productService.subscribeToProducts(this.paginator, this.sort);
+  }
+
+  applyFilter({ target }) {
+    const filterValue: string = target.value;
+    this.productService.products.filter = filterValue.trim().toLowerCase();
   }
 
   handleInputChange(e, p: Product) {

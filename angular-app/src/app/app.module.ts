@@ -14,10 +14,12 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { ServiceWorkerModule } from "@angular/service-worker";
-import { HomePageComponent } from "./home-page/home-page.component";
+import { PageNotFoundModule } from "./page-not-found/page-not-found.module";
+import { ProductsModule } from "./products/products.module";
+import { SettingsModule } from './settings/settings.module';
 
 @NgModule({
-  declarations: [AppComponent, HomePageComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,7 +31,10 @@ import { HomePageComponent } from "./home-page/home-page.component";
     AngularFireAuthModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production
-    })
+    }),
+    PageNotFoundModule,
+    ProductsModule,
+    SettingsModule
   ],
   bootstrap: [AppComponent]
 })
