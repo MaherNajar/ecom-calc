@@ -55,6 +55,15 @@
             <button mat-button (click)="openProductFormDialog(product.id)">
               {{ product.name }}
             </button>
+            <a [href]="product.url" target="_blank">
+              <fa-icon
+                title="Go to website"
+                class="externalLink"
+                [icon]="faExternalLinkAlt"
+                size="md"
+              >
+              </fa-icon>
+            </a>
           </td>
         </ng-container>
 

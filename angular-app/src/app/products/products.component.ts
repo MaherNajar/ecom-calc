@@ -4,7 +4,8 @@ import {
   faTools,
   faSyncAlt,
   faTrashAlt,
-  faPlusCircle
+  faPlusCircle,
+  faExternalLinkAlt
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ProductService } from "../services/product.service";
@@ -26,6 +27,8 @@ export class ProductsComponent implements OnInit {
   faSave = faSave;
   faTrashAlt = faTrashAlt;
   faPlusCircle = faPlusCircle;
+  faExternalLinkAlt = faExternalLinkAlt;
+
   displayedColumns = ["Product", "Cost", "Sell", "Profit", "Rate", "Delete"];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

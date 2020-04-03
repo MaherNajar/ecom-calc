@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Check current version of node
           command: node -v
-      - sonarcloud/scan
+      # - sonarcloud/scan
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
