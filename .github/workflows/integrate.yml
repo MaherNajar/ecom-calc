@@ -6,11 +6,11 @@ name: Node Continuous Integration
 # events but only for the master branch
 on:
   push:
-    branches: 
-    - master
-    - release/*
+    branches:
+      - master
+      - release/*
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -21,14 +21,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@master
-    # Setup node 12
-    - uses: actions/setup-node@master
-      with:
-        node-version: 12
-    # Run commands
-    - run: npm ci
-    - run: npm test
-    - run: npm run build
-    
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@master
+      # Setup node 12
+      - uses: actions/setup-node@master
+        with:
+          node-version: 12
+      # Run commands
+      - run: npm ci
+      - run: npm run build
