@@ -26,7 +26,7 @@ jobs:
           node-version: 12
       # Install dependencies and build app
       - run: npm ci
-      - run: npm run build:prod
+      - run: npm run build
       # Deploy to firebase
        - uses: w9jds/firebase-action@master
       with:
