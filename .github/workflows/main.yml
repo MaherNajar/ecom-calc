@@ -29,6 +29,6 @@ jobs:
       # Deploy to firebase
       - uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting --project ecom-calc
+          args: deploy --only hosting --project my-ecom-calc
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
