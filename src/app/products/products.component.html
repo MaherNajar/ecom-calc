@@ -67,28 +67,6 @@
           </td>
         </ng-container>
 
-        <!-- Cost Column -->
-        <ng-container matColumnDef="Cost">
-          <th
-            id="cost-header"
-            mat-header-cell
-            *matHeaderCellDef
-            mat-sort-header
-          >
-            Cost
-          </th>
-          <td mat-cell *matCellDef="let product">
-            <input
-              (change)="handleInputChange($event, product)"
-              [value]="product.cost"
-              name="cost"
-              min="0"
-              type="number"
-              class="cost"
-            />
-          </td>
-        </ng-container>
-
         <!-- Sell Column -->
         <ng-container matColumnDef="Sell">
           <th
@@ -111,6 +89,48 @@
           </td>
         </ng-container>
 
+        <!-- Cost Column -->
+        <ng-container matColumnDef="Cost">
+          <th
+            id="cost-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Cost
+          </th>
+          <td mat-cell *matCellDef="let product">
+            <input
+              (change)="handleInputChange($event, product)"
+              [value]="product.cost"
+              name="cost"
+              min="0"
+              type="number"
+              class="cost"
+            />
+          </td>
+        </ng-container>
+
+        <!-- Fees Column -->
+        <ng-container matColumnDef="Fees">
+          <th
+            id="sell-header"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            Fees
+          </th>
+          <td mat-cell *matCellDef="let product">
+            <input
+              readonly
+              type="text"
+              value="{{ product.fees | number: '1.0-2' }}"
+              class="fees"
+            />
+          </td>
+        </ng-container>
+
         <!-- Profit Column -->
         <ng-container matColumnDef="Profit">
           <th
@@ -124,8 +144,9 @@
           <td mat-cell *matCellDef="let product">
             <input
               readonly
+              [ngStyle]="{ color: product.profit > 0 ? 'green' : 'red' }"
               type="text"
-              value="{{ product.profit }}"
+              value="{{ product.profit | number: '1.0-2' }}"
               class="profit"
             />
           </td>
@@ -146,7 +167,7 @@
               readonly
               [ngStyle]="{ color: product.rate >= 10 ? 'green' : 'red' }"
               type="text"
-              value="{{ product.rate }} %"
+              value="{{ product.rate | number: '1.0-2' }} %"
               class="text-nowrap rate"
             />
           </td>

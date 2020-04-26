@@ -5,7 +5,7 @@ import {
   faSyncAlt,
   faTrashAlt,
   faPlusCircle,
-  faExternalLinkAlt
+  faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { ProductService } from "../services/product.service";
@@ -19,7 +19,7 @@ import { MatSort } from "@angular/material/sort";
 @Component({
   selector: "app-products",
   templateUrl: "./products.component.html",
-  styleUrls: ["./products.component.scss"]
+  styleUrls: ["./products.component.scss"],
 })
 export class ProductsComponent implements OnInit {
   faSyncAlt = faSyncAlt;
@@ -29,7 +29,15 @@ export class ProductsComponent implements OnInit {
   faPlusCircle = faPlusCircle;
   faExternalLinkAlt = faExternalLinkAlt;
 
-  displayedColumns = ["Product", "Cost", "Sell", "Profit", "Rate", "Delete"];
+  displayedColumns = [
+    "Product",
+    "Cost",
+    "Sell",
+    "Fees",
+    "Profit",
+    "Rate",
+    "Delete",
+  ];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -60,7 +68,7 @@ export class ProductsComponent implements OnInit {
   openProductFormDialog(id: string) {
     this.dialog.open(ProductFormComponent, {
       width: "400px",
-      data: { id }
+      data: { id },
     });
   }
 }

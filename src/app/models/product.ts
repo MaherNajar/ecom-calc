@@ -11,15 +11,19 @@ export class Product {
     Object.assign(this, init);
   }
 
-  get profit() {
+  get fees() {
     let fees = Fees.getFees();
     let ebay = this.sell * fees.ebay;
     let paypal = this.sell * fees.paypal;
 
-    return +(this.sell - this.cost - ebay - paypal).toFixed(2);
+    return ebay + paypal;
+  }
+
+  get profit() {
+    return this.sell - this.cost - this.fees;
   }
   get rate() {
-    return +((this.profit / this.sell) * 100).toFixed(2);
+    return (this.profit / this.sell) * 100;
   }
 
   get isNew() {
