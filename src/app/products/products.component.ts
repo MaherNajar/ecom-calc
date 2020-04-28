@@ -36,6 +36,8 @@ export class ProductsComponent implements OnInit {
     "Fees",
     "Profit",
     "Rate",
+    "Quantity",
+    "Total",
     "Delete",
   ];
 

@@ -1,10 +1,10 @@
 mat-card {
   min-width: 150px;
-  max-width: 1000px;
-  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0;
+  width: 100%;
   border-radius: 0;
+  --warning: #ff6d00;
 }
 
 #filterForm {
@@ -13,7 +13,8 @@ mat-card {
   max-width: 300px;
 }
 
-fa-icon {
+fa-icon,
+#total {
   margin: 1rem;
 }
 
@@ -23,7 +24,8 @@ fa-icon:hover {
 
 #syncBtn,
 #settingsBtn,
-#saveBtn {
+#saveBtn,
+#total {
   float: right;
 }
 
@@ -33,10 +35,10 @@ fa-icon:hover {
 
 @keyframes blinkingSave {
   0% {
-    color: #000;
+    color: var(--warning);
   }
   49% {
-    color: #000;
+    color: var(--warning);
   }
   60% {
     color: transparent;
@@ -45,21 +47,30 @@ fa-icon:hover {
     color: transparent;
   }
   100% {
-    color: #000;
+    color: var(--warning);
   }
+}
+
+th.mat-header-cell,
+td.mat-cell:first-of-type {
+  white-space: nowrap;
+  padding-left: 13px;
 }
 
 td > input {
   width: 60px;
   background: transparent;
   border: none;
+  text-align: center;
 }
 
 .cost,
-.sell {
+.sell,
+.quantity,
+.total {
   color: white;
 }
 
 .fees {
-  color: #ff6d00;
+  color: var(--warning);
 }

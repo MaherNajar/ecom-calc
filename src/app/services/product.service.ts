@@ -8,7 +8,6 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { Product } from "../models/product";
-import { User } from "firebase";
 
 @Injectable({
   providedIn: "root",
@@ -18,6 +17,10 @@ export class ProductService {
 
   products: MatTableDataSource<Product> = null;
   saved = true;
+
+  get total() {
+    return this.products?.data.map((x) => x.total).reduce((a, b) => a + b);
+  }
 
   subscribeToProducts(paginator: MatPaginator, sort: MatSort) {
     if (!this.products) {

@@ -6,6 +6,7 @@ export class Product {
   url: string = "";
   cost: number = 0;
   sell: number = 0;
+  quantity: number = 0;
 
   constructor(init?: Partial<Product>) {
     Object.assign(this, init);
@@ -24,6 +25,10 @@ export class Product {
   }
   get rate() {
     return (this.profit / this.sell) * 100;
+  }
+
+  get total() {
+    return this.quantity * this.sell;
   }
 
   get isNew() {
