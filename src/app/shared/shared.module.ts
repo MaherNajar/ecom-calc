@@ -18,6 +18,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { ShellComponent } from "./shell/shell.component";
 
@@ -38,7 +39,8 @@ const modules = [
   MatListModule,
   MatToolbarModule,
   MatDialogModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTooltipModule,
 ];
 
 const components = [ShellComponent];
@@ -46,6 +48,6 @@ const components = [ShellComponent];
 @NgModule({
   declarations: [...components],
   imports: [...modules],
-  exports: [...modules, ...components]
+  exports: [...modules, ...components],
 })
 export class SharedModule {}

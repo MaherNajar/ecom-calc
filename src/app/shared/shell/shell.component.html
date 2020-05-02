@@ -12,9 +12,8 @@
       <a mat-list-item routerLink="/" (click)="drawer.close()">Home</a>
       <a mat-list-item routerLink="/login" (click)="drawer.close()">Login</a>
       <a mat-list-item routerLink="/products" (click)="drawer.close()"
-        >Ecommerce</a
+        >E-Commerce</a
       >
-      <a mat-list-item routerLink="/" (click)="drawer.close()">Tutos</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -29,7 +28,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span class="logo" routerLink="/"
-        >🔥
+        >💸
         <strong *ngIf="afAuth.authState | async as user">
           {{ user.displayName }}</strong
         ></span
@@ -37,9 +36,7 @@
 
       <span class="fill-space"></span>
       <div *ngIf="!(isHandset$ | async)">
-        <a mat-button routerLink="/products">🍱 Ecommerce</a>
-        <a mat-button routerLink="/tutos">⚡ Tutos</a>
-
+        <a mat-button routerLink="/products">🛒 Ecommerce</a>
         <a mat-button routerLink="/login" *ngIf="!(afAuth.authState | async)">
           🔑 Login
         </a>

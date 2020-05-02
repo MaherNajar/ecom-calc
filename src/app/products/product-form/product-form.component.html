@@ -1,6 +1,6 @@
 <main>
   <div *ngIf="productForm">
-    <h1 class=" text-nowrap text-center">
+    <h1 class="text-nowrap text-center">
       {{ isNew ? "New product" : "Edit product" }}
     </h1>
 
@@ -27,19 +27,17 @@
         <input matInput formControlName="url" type="url" />
       </mat-form-field>
 
-      <ng-container *ngIf="!isNew">
-        <!-- Cost form-field -->
-        <mat-form-field>
-          <mat-label>Cost</mat-label>
-          <input matInput formControlName="cost" type="number" />
-        </mat-form-field>
+      <!-- Cost form-field -->
+      <mat-form-field>
+        <mat-label>Cost</mat-label>
+        <input matInput formControlName="cost" type="number" />
+      </mat-form-field>
 
-        <!-- Sell form-field -->
-        <mat-form-field>
-          <mat-label>Sell</mat-label>
-          <input matInput formControlName="sell" type="number" />
-        </mat-form-field>
-      </ng-container>
+      <!-- Sell form-field -->
+      <mat-form-field>
+        <mat-label>Sell</mat-label>
+        <input matInput formControlName="sell" type="number" />
+      </mat-form-field>
 
       <div class="text-center">
         <!-- Form Submit button-->
