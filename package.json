@@ -26,7 +26,7 @@
     "@angular/router": "~9.1.0",
     "@angular/service-worker": "~9.1.0",
     "@fortawesome/angular-fontawesome": "^0.6.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "bootstrap": "^4.5.0",
     "firebase": ">= 5.5.7 <8",
