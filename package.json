@@ -28,7 +28,7 @@
     "@fortawesome/angular-fontawesome": "^0.7.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
-    "bootstrap": "^4.5.1",
+    "bootstrap": "^4.5.2",
     "firebase": "^7.17.1",
     "rxjs": "~6.6.2",
     "tslib": "^2.0.0",
