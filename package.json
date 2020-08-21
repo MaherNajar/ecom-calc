@@ -37,7 +37,7 @@
   "devDependencies": {
     "@angular-devkit/architect": "<0.1001 || ^0.900.0-0 || ^9.0.0-0",
     "@angular-devkit/build-angular": "~0.1000.7",
-    "@angular/cli": "~10.0.6",
+    "@angular/cli": "~10.0.7",
     "@angular/compiler-cli": "~10.0.2",
     "@angular/language-service": "~10.0.11",
     "@types/jasmine": "~3.5.12",
