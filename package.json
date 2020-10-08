@@ -29,7 +29,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.0",
     "bootstrap": "^4.5.2",
-    "firebase": "^7.21.1",
+    "firebase": "^7.22.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.2",
     "zone.js": "~0.10.2"
